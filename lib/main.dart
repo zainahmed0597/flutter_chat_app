@@ -4,7 +4,6 @@ import 'package:flutter_chat_app/screens/login_screen.dart';
 import 'package:flutter_chat_app/screens/registration_screen.dart';
 import 'package:flutter_chat_app/screens/welcome_screen.dart';
 
-
 void main() => runApp(FlashChat());
 
 class FlashChat extends StatelessWidget {
@@ -16,9 +15,9 @@ class FlashChat extends StatelessWidget {
           body1: TextStyle(color: Colors.black54),
         ),
       ),
-      initialRoute: 'WelcomeScreen',
+      initialRoute: WelcomeScreen.id,
       routes: {
-        'WelcomeScreen':(context)=> WelcomeScreen(),
+        WelcomeScreen.id:(context)=> WelcomeScreen(),
         'LoginScreen':(context)=> LoginScreen(),
         'RegistrationScreen':(context)=> RegistrationScreen(),
         'ChatScreen':(context)=> ChatScreen(),
