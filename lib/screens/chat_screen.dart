@@ -1,8 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
@@ -12,9 +12,9 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final _firestore = Firestore.instance;
+  final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
-  FirebaseUser loggedInUser;
+  User loggedInUser;
   String messageText;
 
   @override
@@ -25,7 +25,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void getCurrentUser() async {
     try {
-      final user = await _auth.currentUser;
+      final user = _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
       }
@@ -34,7 +34,12 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-
+  void getMassages() async {
+    final massages = await _firestore.collection('messages').getDocuments();
+    for (var massages in massages.docs) {
+      print(massages.data);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +48,11 @@ class _ChatScreenState extends State<ChatScreen> {
         leading: null,
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.close),
+              icon: Icon(Icons.add),
               onPressed: () {
-                _auth.signOut();
-                Navigator.pop(context);
+                getMassages();
+                //   _auth.signOut();
+                //   Navigator.pop(context);
               }),
         ],
         title: Center(child: Text('⚡️Chat')),
@@ -73,9 +79,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   FlatButton(
                     onPressed: () {
                       _firestore.collection('messages').add({
-                        'sender': loggedInUser,
                         'text': messageText,
-
+                        'sender': loggedInUser.email,
                       });
                     },
                     child: Text(
