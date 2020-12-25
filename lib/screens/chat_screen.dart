@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
 
@@ -34,12 +33,20 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  void getMassages() async {
-    final massages = await _firestore.collection('messages').getDocuments();
-    for (var massages in massages.docs) {
-      print(massages.data);
+  void messagesStream() async {
+    await for (var snapshot in _firestore.collection('messages').snapshots()) {
+      for (var massages in snapshot.docs) {
+        print(massages.data());
+      }
     }
   }
+
+  // void getMassages() async {
+  //   final massages = await _firestore.collection('messages').get();
+  //   for (var massages in massages.docs) {
+  //     print(massages.data());
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +55,9 @@ class _ChatScreenState extends State<ChatScreen> {
         leading: null,
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.add),
+              icon: Icon(Icons.logout),
               onPressed: () {
-                getMassages();
+                messagesStream();
                 //   _auth.signOut();
                 //   Navigator.pop(context);
               }),
