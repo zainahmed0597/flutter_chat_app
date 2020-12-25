@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/constants.dart';
@@ -57,7 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.logout),
               onPressed: () {
-                messagesStream();
+                // messagesStream();
                 //   _auth.signOut();
                 //   Navigator.pop(context);
               }),
@@ -70,6 +72,24 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            StreamBuilder(
+              stream: _firestore.collection('messages').snapshots(),
+              builder: (BuildContext, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasData) {
+                  final messages = snapshot.data.docs;
+                  List<Text> messageWidgets = [];
+                  for (var message in messages) {
+                    final messageText = message.data['text'];
+                    final messageSender = message.data['sender'];
+
+                    final messageWidget =
+                        Text('$messageText from $messageSender');
+                    messageWidgets.add(messageWidget);
+                  }
+                  return Column(children: messageWidgets);
+                }
+              },
+            ),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
