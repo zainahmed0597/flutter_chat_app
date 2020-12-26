@@ -73,6 +73,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   FlatButton(
                     onPressed: () {
+                      messageTextController.clear();
                       _fireStore.collection('messages').add({
                         'text': messageText,
                         'sender': loggedInUser.email,
@@ -111,9 +112,7 @@ class MessagesStream extends StatelessWidget {
         for (var message in messages) {
           final messageText = message.data()['text'];
           final messageSender = message.data()['sender'];
-
           final currentUser = loggedInUser.email;
-
           final messageBubble = MessageBubble(
             sender: messageSender,
             text: messageText,
@@ -162,7 +161,7 @@ class MessageBubble extends StatelessWidget {
                     bottomLeft: Radius.circular(30.0),
                     bottomRight: Radius.circular(30.0)),
             elevation: 5.0,
-            color: isMe ? Colors.lightBlueAccent : Colors.white,
+            color: isMe ? Colors.lightBlueAccent : Colors.deepPurple[300],
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(
