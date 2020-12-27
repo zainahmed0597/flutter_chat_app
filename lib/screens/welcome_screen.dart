@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_app/compinents/rounded_button.dart';
-import 'login_screen.dart';
-import 'registration_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter_chat_app/compinents/rounded_button.dart';
+import 'package:flutter_chat_app/screens/registration_screen.dart';
+
+import 'chat_screen.dart';
+import 'login_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = 'welcome_screen';
@@ -24,15 +28,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       duration: Duration(seconds: 1),
       vsync: this,
     );
-
     animation = ColorTween(begin: Colors.blueGrey, end: Colors.white)
         .animate(controller);
-
     controller.forward();
-
     controller.addListener(() {
       setState(() {});
-      // print(animation.value);
     });
   }
 

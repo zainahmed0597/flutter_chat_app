@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_chat_app/screens/navigation_drawer.dart';
 
 final _fireStore = FirebaseFirestore.instance;
 User loggedInUser;
@@ -41,15 +42,15 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         leading: null,
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.logout),
-              onPressed: () {
-                _auth.signOut();
-                Navigator.pop(context);
-              }),
+          // IconButton(
+          //     icon: Icon(Icons.logout),
+          //     onPressed: () {
+          //       _auth.signOut();
+          //       Navigator.pop(context);
+          //     }),
         ],
-        title: Center(child: Text('⚡️Chat')),
-        backgroundColor: Colors.lightBlueAccent,
+        title: Center(child: Text('⚡️Chat              ')),
+        backgroundColor: Colors.grey,
       ),
       body: SafeArea(
         child: Column(
@@ -79,9 +80,10 @@ class _ChatScreenState extends State<ChatScreen> {
                         'sender': loggedInUser.email,
                       });
                     },
-                    child: Text(
-                      'Send',
-                      style: kSendButtonTextStyle,
+                    child: Icon(
+                      Icons.send,
+                      color: Colors.grey,
+                      size: 25.0,
                     ),
                   ),
                 ],
@@ -90,6 +92,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
       ),
+      drawer: NavigationDrawer(),
     );
   }
 }
@@ -102,10 +105,10 @@ class MessagesStream extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) {
           return Center(
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.lightBlueAccent,
-            ),
-          );
+              //     child: CircularProgressIndicator(
+              //       backgroundColor: Colors.lightBlueAccent,
+              //     ),
+              );
         }
         final messages = snapshot.data.docs.reversed;
         List<MessageBubble> messageBubbles = [];
@@ -161,7 +164,7 @@ class MessageBubble extends StatelessWidget {
                     bottomLeft: Radius.circular(30.0),
                     bottomRight: Radius.circular(30.0)),
             elevation: 5.0,
-            color: isMe ? Colors.lightBlueAccent : Colors.deepPurple[300],
+            color: isMe ? Colors.blueAccent : Colors.deepPurple[300],
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(

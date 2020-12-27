@@ -14,13 +14,14 @@ void main() async {
 class FlashChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       initialRoute: WelcomeScreen.id,
       routes: {
-        WelcomeScreen.id:(context)=> WelcomeScreen(),
-        LoginScreen.id:(context)=> LoginScreen(),
-        RegistrationScreen.id:(context)=> RegistrationScreen(),
-        ChatScreen.id:(context)=> ChatScreen(),
+        WelcomeScreen.id: (context) => WelcomeScreen(),
+        LoginScreen.id: (context) => LoginScreen(),
+        RegistrationScreen.id: (context) => RegistrationScreen(),
+        ChatScreen.id: (context) => ChatScreen(),
       },
     );
   }
