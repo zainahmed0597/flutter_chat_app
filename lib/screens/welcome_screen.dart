@@ -1,12 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_chat_app/compinents/rounded_button.dart';
 import 'package:flutter_chat_app/screens/registration_screen.dart';
 
-import 'chat_screen.dart';
 import 'login_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {

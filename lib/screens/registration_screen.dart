@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_chat_app/screens/chat_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-import '../constants.dart';
+import '../utils/constants.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';

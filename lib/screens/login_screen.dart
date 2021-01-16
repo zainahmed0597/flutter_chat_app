@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/compinents/rounded_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import '../constants.dart';
+import '../utils/constants.dart';
 import 'chat_screen.dart';
+import 'registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -68,6 +69,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   colors: Colors.lightBlueAccent,
                   title: 'Log In',
                   onPressed: () async {
+
+                    Constants.prefs.setBool("loggedIn", true);
+
                     setState(() {
                       showSpinner = true;
                     });
@@ -75,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       final user = await _auth.signInWithEmailAndPassword(
                           email: email, password: password);
                       if (user != null) {
-                        Navigator.pushNamed(context, ChatScreen.id);
+                        Navigator.pushReplacementNamed(context, ChatScreen.id);
                       }
                       setState(() {
                         showSpinner = false;
@@ -84,6 +88,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       print(e);
                     }
                   }),
+
+              RoundedButton(
+                colors: Colors.blueAccent,
+                title: 'Register',
+                onPressed: () {
+                  Navigator.pushNamed(context, RegistrationScreen.id);
+                },
+              ),
             ],
           ),
         ),
